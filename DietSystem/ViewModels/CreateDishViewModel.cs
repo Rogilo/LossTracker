@@ -1,4 +1,5 @@
-﻿using RunDietSystem.Data.Enum;
+﻿using DietSystem.Models;
+using RunDietSystem.Data.Enum;
 
 namespace RunDietSystem.ViewModels
 {
@@ -6,7 +7,6 @@ namespace RunDietSystem.ViewModels
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-        public string? Ingredients { get; set; }
         public string? MethodOfCooking { get; set; }
         public DishCategory DishCategory { get; set; }
         public IFormFile? Image { get; set; }
@@ -14,5 +14,6 @@ namespace RunDietSystem.ViewModels
         public double Proteins { get; set; }
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
+        public List<DishIngredient> DishIngredients { get; } = new();
     }
 }

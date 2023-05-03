@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Ingredient>
+
+@{
+    ViewData["Title"] = "Ingredient Page";
+}
+
+<h2 class="mt-4 text-center">Ingredients</h2>
+<div class="row mb-3 text-center">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 themed-grid-col">@item.Id</div>
+        <div class="col-md-6 themed-grid-col">@item.Name</div>
+        <div class="col-md-3 themed-grid-col">@item.IngredientCategory</div>
+        <a type="btn btn-success" asp-controller="Ingredient" asp-action="Edit"
+        asp-route-id="@item.Id"class="btn btn btn-outline-secondary">Edit</a>
+    }
+</div>

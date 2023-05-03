@@ -19,6 +19,7 @@ namespace RunDietSystem.Controllers
 
         public async Task<IActionResult> Index()
         {
+            /*var ingredientdata = Ingredient.GetAll();*/
             IEnumerable<Dish> dishes = await _dishrepository.GetAll();
             return View(dishes);
         }

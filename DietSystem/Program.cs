@@ -1,5 +1,7 @@
 using DietSystem.Data;
+using DietSystem.Interfaces;
 using DietSystem.Models;
+using DietSystem.Repository;
 using Microsoft.EntityFrameworkCore;
 using RunDietSystem.Helpers;
 using RunDietSystem.Interfaces;
@@ -11,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IDishRepository, DishRepository>();
+builder.Services.AddScoped<IIngredientRepository,IngredientRepository>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddDbContext<ApplicationDbContext>(Options =>

@@ -10,7 +10,5 @@ namespace RunDietSystem.Interfaces
         bool Update(Dish dish);
         bool Delete(Dish dish);
         bool Save();
-
-
     }
 }

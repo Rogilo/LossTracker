@@ -4,7 +4,7 @@
 
 namespace DietSystem.Migrations
 {
-    public partial class IniticalCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
