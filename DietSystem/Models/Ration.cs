@@ -11,5 +11,6 @@ namespace DietSystem.Models
         public int? AppUserId { get; set; }
         public AppUser? AppUser { get; set; }
         public string? RationName { get; set; }
+        public List<Meal>? Meals { get; set; }
     }
 }

@@ -1,18 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DietSystem.Models
 {
     public class DishIngredient
     {
-
-        [Key]
-        public int Id { get; set; }
         [ForeignKey("Ingredient")]
-        public int? IngredientId { get; set; }
-        public Ingredient? Ingredient { get; set; }
+        public int IngredientId { get; set; }
         [ForeignKey("Dish")]
-        public int? DishId { get; set; }
-        public Dish? Dish { get; set; }
+        public int DishId { get; set; }
+
+        public  Ingredient Ingredient { get; set; }
+        public  Dish Dish { get; set; }
     }
 }
+ 

@@ -12,7 +12,6 @@ namespace DietSystem.Models
         public int? RationId { get; set; }
         public Ration? Ration { get; set; }
         public MealCategory MealCategory { get; set; }
-        public List<Dish> Dishes { get; } = new();
-        public List<MealDish> MealDishes { get; } = new();
+        public List<MealDish>? MealDishes { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace DietSystem.Controllers
         {
             var ingredient = await _ingredientRepository.GetByIdAsync(id);
             if (ingredient == null) return View("Error");
-            var ingredientVM = new EditIngredientViewModel
+            var ingredientVM = new EditIngredientVM
             {
                 Name = ingredient.Name,
                 IngredientCategory = ingredient.IngredientCategory,
@@ -47,7 +47,7 @@ namespace DietSystem.Controllers
             return View(ingredientVM);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, EditIngredientViewModel ingredientVM)
+        public async Task<IActionResult> Edit(int id, EditIngredientVM ingredientVM)
         {
             if (!ModelState.IsValid)
             {

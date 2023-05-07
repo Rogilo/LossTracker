@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DietSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230502074101_InitialCreate")]
+    [Migration("20230506090705_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,21 +82,13 @@ namespace DietSystem.Migrations
 
             modelBuilder.Entity("DietSystem.Models.DishIngredient", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<int?>("DishId")
                         .HasColumnType("int");
 
                     b.Property<int?>("IngredientId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("DishId");
+                    b.HasKey("DishId", "IngredientId");
 
                     b.HasIndex("IngredientId");
 
@@ -145,20 +137,15 @@ namespace DietSystem.Migrations
 
             modelBuilder.Entity("DietSystem.Models.MealDish", b =>
                 {
-                    b.Property<int>("DishesId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("MealId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MDishId")
+                    b.Property<int?>("DishId")
                         .HasColumnType("int");
 
-                    b.HasKey("DishesId", "MealId");
+                    b.HasKey("MealId", "DishId");
 
-                    b.HasIndex("MDishId");
-
-                    b.HasIndex("MealId");
+                    b.HasIndex("DishId");
 
                     b.ToTable("MealDishes");
                 });
@@ -188,11 +175,15 @@ namespace DietSystem.Migrations
                 {
                     b.HasOne("DietSystem.Models.Dish", "Dish")
                         .WithMany("DishIngredients")
-                        .HasForeignKey("DishId");
+                        .HasForeignKey("DishId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DietSystem.Models.Ingredient", "Ingredient")
                         .WithMany("DishIngredients")
-                        .HasForeignKey("IngredientId");
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Dish");
 
@@ -202,7 +193,7 @@ namespace DietSystem.Migrations
             modelBuilder.Entity("DietSystem.Models.Meal", b =>
                 {
                     b.HasOne("DietSystem.Models.Ration", "Ration")
-                        .WithMany()
+                        .WithMany("Meals")
                         .HasForeignKey("RationId");
 
                     b.Navigation("Ration");
@@ -210,15 +201,11 @@ namespace DietSystem.Migrations
 
             modelBuilder.Entity("DietSystem.Models.MealDish", b =>
                 {
-                    b.HasOne("DietSystem.Models.Dish", null)
+                    b.HasOne("DietSystem.Models.Dish", "Dish")
                         .WithMany("MealDishes")
-                        .HasForeignKey("DishesId")
+                        .HasForeignKey("DishId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("DietSystem.Models.Ration", "MDish")
-                        .WithMany()
-                        .HasForeignKey("MDishId");
 
                     b.HasOne("DietSystem.Models.Meal", "Meal")
                         .WithMany("MealDishes")
@@ -226,7 +213,7 @@ namespace DietSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MDish");
+                    b.Navigation("Dish");
 
                     b.Navigation("Meal");
                 });
@@ -234,10 +221,15 @@ namespace DietSystem.Migrations
             modelBuilder.Entity("DietSystem.Models.Ration", b =>
                 {
                     b.HasOne("DietSystem.Models.AppUser", "AppUser")
-                        .WithMany()
+                        .WithMany("Rations")
                         .HasForeignKey("AppUserId");
 
                     b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("DietSystem.Models.AppUser", b =>
+                {
+                    b.Navigation("Rations");
                 });
 
             modelBuilder.Entity("DietSystem.Models.Dish", b =>
@@ -255,6 +247,11 @@ namespace DietSystem.Migrations
             modelBuilder.Entity("DietSystem.Models.Meal", b =>
                 {
                     b.Navigation("MealDishes");
+                });
+
+            modelBuilder.Entity("DietSystem.Models.Ration", b =>
+                {
+                    b.Navigation("Meals");
                 });
 #pragma warning restore 612, 618
         }

@@ -19,25 +19,38 @@ namespace DietSystem.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DishIngredient>()
-                .HasOne(e => e.Ingredient)
-                .WithMany(e => e.DishIngredients)
-                .HasForeignKey(e => e.IngredientId);
-
+                    .HasKey(pc => new { pc.DishId, pc.IngredientId });
             modelBuilder.Entity<DishIngredient>()
-               .HasOne(e => e.Dish)
-               .WithMany(e => e.DishIngredients)
-               .HasForeignKey(e => e.DishId);
+                    .HasOne(p => p.Dish)
+                    .WithMany(pc => pc.DishIngredients)
+                    .HasForeignKey(p => p.DishId);
+            modelBuilder.Entity<DishIngredient>()
+                    .HasOne(p => p.Ingredient)
+                    .WithMany(pc => pc.DishIngredients)
+                    .HasForeignKey(c => c.IngredientId);
 
-            /*    modelBuilder.Entity<Ingredient>()
-                    .HasMany(e => e.Dishes)
-                    .WithMany(e => e.Ingredients)
-                    .UsingEntity<DishIngredient>();*/
 
-            modelBuilder.Entity<Meal>()
-                .HasMany(e => e.Dishes)
-                .WithMany(e => e.Meals)
-                .UsingEntity<MealDish>();
+            modelBuilder.Entity<MealDish>()
+                   .HasKey(pc => new { pc.MealId, pc.DishId });
+            modelBuilder.Entity<MealDish>()
+                    .HasOne(p => p.Meal)
+                    .WithMany(pc => pc.MealDishes)
+                    .HasForeignKey(p => p.MealId);
+            modelBuilder.Entity<MealDish>()
+                    .HasOne(p => p.Dish)
+                    .WithMany(pc => pc.MealDishes)
+                    .HasForeignKey(c => c.DishId);
 
+
+            /* modelBuilder.Entity<DishIngredient>()
+                 .HasOne(e => e.Ingredient)
+                 .WithMany(e => e.DishIngredients)
+                 .HasForeignKey(e => e.IngredientId);
+
+             modelBuilder.Entity<DishIngredient>()
+                .HasOne(e => e.Dish)
+                .WithMany(e => e.DishIngredients)
+                .HasForeignKey(e => e.DishId);*/
         }
     }
 }

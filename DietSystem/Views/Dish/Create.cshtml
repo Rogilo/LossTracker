@@ -1,55 +1,148 @@
 ﻿@using RunDietSystem.Data.Enum;
 @using RunDietSystem.ViewModels;
 
-@model CreateDishViewModel
+@model NewDishVM
+@{
+    ViewData["Title"] = "Add a new dish";
+}
 
-<form method="post" asp-action="Create" enctype="multipart/form-data">
-    <div class="form-group">
-        <label asp-for="Name">Name</label>
-        <input asp-for="Name" class="form-control" placeholder="Name of the dish">
-        <span asp-validation-for="Name" class="text-danger"></span>
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Create a new dish</h4>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Name">Name</label>
+                                <input asp-for="Name" class="form-control" placeholder="Name of the dish">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MethodOfCooking">Method of cooking</label>
+                                <input asp-for="MethodOfCooking" class="form-control" placeholder="Method of cooking">
+                                <span asp-validation-for="MethodOfCooking" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DishCategory">Dish category</label>
+                                <select asp-for="DishCategory" asp-items="@Html.GetEnumSelectList<DishCategory>()" class="form-control form-control">
+                                    <option>--Select--</option>
+                                </select>
+                                <span asp-validation-for="DishCategory" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Calories">Calories</label>
+                                <input asp-for="Calories" class="form-control" placeholder="Calories in grams">
+                                <span asp-validation-for="Calories" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Proteins">Proteins</label>
+                                <input asp-for="Proteins" class="form-control" placeholder="Proteins in grams">
+                                <span asp-validation-for="Proteins" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Fats">Fats</label>
+                                <input asp-for="Fats" class="form-control" placeholder="Fats in grams">
+                                <span asp-validation-for="Fats" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Carbohydrates">Carbohydrates</label>
+                                <input asp-for="Carbohydrates" class="form-control" placeholder="Carbohydrates in grams">
+                                <span asp-validation-for="Carbohydrates" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IngredientIds" class="control-label"></label>
+                                <select asp-for="IngredientIds" class="form-control" asp-items="ViewBag.Ingredients" multiple></select>
+                                <span asp-validation-for="IngredientIds" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Image">Image</label>
+                                <input asp-for="Image" type="file" class="form-control" placeholder="Image">
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Show all</a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
     </div>
-@*    <div class="form-group">
-        <label asp-for="Ingredients">Ingredients</label>
-        <input asp-for="Ingredients" class="form-control" placeholder="Ingredients of the dish">
-        <span asp-validation-for="Ingredients" class="text-danger"></span>
-    </div>*@
-    <div class="form-group">
-        <label asp-for="MethodOfCooking">Method of cooking</label>
-        <input asp-for="MethodOfCooking" class="form-control" placeholder="Method of cooking">
-        <span asp-validation-for="MethodOfCooking" class="text-danger"></span>
+</div>
+@*<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Add a new dish</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form method="post" asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                < <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-outline-success float-right" />
+                    <a class="btn btn-outline-secondary" asp-action="Index">Show all</a>
+                </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="DishCategory">Dish category</label>
-        <select asp-for="DishCategory" asp-items="@Html.GetEnumSelectList<DishCategory>()" class="form-control form-control">
-            <option>--Select--</option>
-        </select>
-        <span asp-validation-for="DishCategory" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Calories">Calories</label>
-        <input asp-for="Calories" class="form-control" placeholder="Calories in grams">
-        <span asp-validation-for="Calories" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Proteins">Proteins</label>
-        <input asp-for="Proteins" class="form-control" placeholder="Proteins in grams">
-        <span asp-validation-for="Proteins" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Fats">Fats</label>
-        <input asp-for="Fats" class="form-control" placeholder="Fats in grams">
-        <span asp-validation-for="Fats" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Carbohydrates">Carbohydrates</label>
-        <input asp-for="Carbohydrates" class="form-control" placeholder="Carbohydrates in grams">
-        <span asp-validation-for="Carbohydrates" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Image">Image</label>
-        <input asp-for="Image" type="file" class="form-control" placeholder="Image">
-        <span asp-validation-for="Image" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</div>
+*@
+@*<div class="form-group">
+    <label asp-for="Name">Name</label>
+    <input asp-for="Name" class="form-control" placeholder="Name of the dish">
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="MethodOfCooking">Method of cooking</label>
+    <input asp-for="MethodOfCooking" class="form-control" placeholder="Method of cooking">
+    <span asp-validation-for="MethodOfCooking" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="DishCategory">Dish category</label>
+    <select asp-for="DishCategory" asp-items="@Html.GetEnumSelectList<DishCategory>()" class="form-control form-control">
+        <option>--Select--</option>
+    </select>
+    <span asp-validation-for="DishCategory" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Calories">Calories</label>
+    <input asp-for="Calories" class="form-control" placeholder="Calories in grams">
+    <span asp-validation-for="Calories" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Proteins">Proteins</label>
+    <input asp-for="Proteins" class="form-control" placeholder="Proteins in grams">
+    <span asp-validation-for="Proteins" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Fats">Fats</label>
+    <input asp-for="Fats" class="form-control" placeholder="Fats in grams">
+    <span asp-validation-for="Fats" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Carbohydrates">Carbohydrates</label>
+    <input asp-for="Carbohydrates" class="form-control" placeholder="Carbohydrates in grams">
+    <span asp-validation-for="Carbohydrates" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="IngredientIds" class="control-label"></label>
+    <select asp-for="IngredientIds" class="form-control" asp-items="ViewBag.Ingredients" multiple></select>
+    <span asp-validation-for="IngredientIds" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Image">Image</label>
+    <input asp-for="Image" type="file" class="form-control" placeholder="Image">
+    <span asp-validation-for="Image" class="text-danger"></span>
+</div>*@

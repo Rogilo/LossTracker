@@ -1,21 +1,50 @@
-﻿using DietSystem.Data;
+﻿using CloudinaryDotNet.Actions;
+using DietSystem.Data;
 using DietSystem.Models;
+using DietSystem.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using RunDietSystem.Interfaces;
+using RunDietSystem.ViewModels;
 
 namespace RunDietSystem.Repository
 {
     public class DishRepository : IDishRepository
     {
         private readonly ApplicationDbContext _context;
-        public DishRepository(ApplicationDbContext context) {
+        private readonly IPhotoService _photoService;
+        public DishRepository(ApplicationDbContext context, IPhotoService photoService) {
 
             _context = context;
+            _photoService = photoService;
         } 
-        public bool Add(Dish dish)
+        public async Task Add(NewDishVM data)
         {
-            _context.Add(dish);
-            return Save();
+            var photoResult = await _photoService.AddPhotoAsync(data.Image);
+            var newDish = new Dish
+            {
+                Name = data.Name,
+                MethodOfCooking = data.MethodOfCooking,
+                DishCategory = data.DishCategory,
+                Image = photoResult.Url.ToString(),
+                Calories = data.Calories,
+                Proteins = data.Proteins,
+                Fats = data.Fats,
+                Carbohydrates = data.Carbohydrates
+            };
+            await _context.Dishes.AddAsync(newDish);
+            await _context.SaveChangesAsync();
+
+            //Add dish ingredients
+            foreach (var ingredientId in data.IngredientIds)
+            {
+                var newDishIngredient = new DishIngredient()
+                {
+                    DishId = newDish.Id,
+                    IngredientId = ingredientId
+                };
+                await _context.DishIngredients.AddAsync(newDishIngredient);
+            }
+            await _context.SaveChangesAsync();
         }
 
         public bool Delete(Dish dish)
@@ -29,22 +58,65 @@ namespace RunDietSystem.Repository
             return await _context.Dishes.ToListAsync();
 
         }
-
         public async Task<Dish> GetByIdAsync(int id)
         {
-            return await _context.Dishes.FirstOrDefaultAsync(i => i.Id == id);
+            var dishDetail = await _context.Dishes
+                .Include(c => c.DishIngredients).ThenInclude(a => a.Ingredient)
+                .FirstOrDefaultAsync(n => n.Id == id);
+            return dishDetail;
+        }
+        public async Task<NewDishDropdownsVM> GetNewDishDropdownsValues()
+        {
+            var response = new NewDishDropdownsVM()
+            {
+                Ingredients = await _context.Ingredients.OrderBy(n => n.Name).ToListAsync(),
+            };
+
+            return response;
+        }
+        public async Task Update(NewDishVM data)
+        {
+            var dbDish = await _context.Dishes.FirstOrDefaultAsync(n => n.Id == data.Id);
+            var photoResult = await _photoService.AddPhotoAsync(data.Image);
+            await _context.SaveChangesAsync();
+            if (dbDish != null)
+            {
+                dbDish.Name = data.Name;    
+                dbDish.MethodOfCooking = data.MethodOfCooking;
+                dbDish.DishCategory = data.DishCategory;
+                dbDish.Image = photoResult.Url.ToString();
+                dbDish.Calories = data.Calories;
+                dbDish.Proteins = data.Proteins;
+                dbDish.Fats = data.Fats;
+                dbDish.Carbohydrates = data.Carbohydrates;
+                await _context.SaveChangesAsync();
+            }
+            // Remove existing ingredients
+            var existingActorsDb = _context.DishIngredients.Where(n => n.Dish.Id == data.Id).ToList();
+            _context.DishIngredients.RemoveRange(existingActorsDb);
+            await _context.SaveChangesAsync();
+
+            //Add dish ingredients
+            foreach (var ingredientId in data.IngredientIds)
+            {
+                var newActorMovie = new DishIngredient()
+                {
+                    DishId = data.Id,
+                    IngredientId = ingredientId
+                };
+                await _context.DishIngredients.AddAsync(newActorMovie);
+            }
+            await _context.SaveChangesAsync();
         }
 
+        public bool Exists(int id)
+        {
+            return _context.Dishes.Any(i => i.Id == id);
+        }
         public bool Save()
         {
             var saved = _context.SaveChanges();
-            return saved > 0 ? true : false;
-        }
-
-        public bool Update(Dish dish)
-        {
-            _context.Update(dish);
-            return Save();
+            return saved > 0;
         }
     }
 }

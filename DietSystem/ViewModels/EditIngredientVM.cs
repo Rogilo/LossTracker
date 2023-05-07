@@ -2,7 +2,7 @@
 
 namespace DietSystem.ViewModels
 {
-    public class EditIngredientViewModel
+    public class EditIngredientVM
     {
         public int Id { get; set; }
         public string? Name { get; set; }

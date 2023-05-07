@@ -1,4 +1,5 @@
-﻿@model Dish
+﻿@using DietSystem.ViewModels;
+@model Dish
 
 @{
     ViewData["Title"] = "Dish Detail";
@@ -18,7 +19,11 @@
 
         <div class="col-md-4">
             <h3 class="my-3">Ingredients:</h3>
-           @* <p>@Model.Ingredients</p>*@
+            <p>@foreach(var item in Model.DishIngredients)
+                {
+                    <div>@item.Ingredient.Name</div>
+                }
+            </p>
             <h3 class="my-3">Method of cooking:</h3>
             <p>@Model.MethodOfCooking</p>
             <h3 class="my-3">Nutrient value in 100 g of the product:</h3>

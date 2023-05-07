@@ -79,24 +79,24 @@ namespace DietSystem.Migrations
                 name: "DishIngredients",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IngredientId = table.Column<int>(type: "int", nullable: true),
-                    DishId = table.Column<int>(type: "int", nullable: true)
+                    IngredientId = table.Column<int>(type: "int", nullable: false),
+                    DishId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DishIngredients", x => x.Id);
+                    table.PrimaryKey("PK_DishIngredients", x => new { x.DishId, x.IngredientId });
                     table.ForeignKey(
                         name: "FK_DishIngredients_Dishes_DishId",
                         column: x => x.DishId,
                         principalTable: "Dishes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DishIngredients_Ingredients_IngredientId",
                         column: x => x.IngredientId,
                         principalTable: "Ingredients",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,15 +123,14 @@ namespace DietSystem.Migrations
                 columns: table => new
                 {
                     MealId = table.Column<int>(type: "int", nullable: false),
-                    DishesId = table.Column<int>(type: "int", nullable: false),
-                    MDishId = table.Column<int>(type: "int", nullable: true)
+                    DishId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MealDishes", x => new { x.DishesId, x.MealId });
+                    table.PrimaryKey("PK_MealDishes", x => new { x.MealId, x.DishId });
                     table.ForeignKey(
-                        name: "FK_MealDishes_Dishes_DishesId",
-                        column: x => x.DishesId,
+                        name: "FK_MealDishes_Dishes_DishId",
+                        column: x => x.DishId,
                         principalTable: "Dishes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -141,17 +140,7 @@ namespace DietSystem.Migrations
                         principalTable: "Meals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MealDishes_Rations_MDishId",
-                        column: x => x.MDishId,
-                        principalTable: "Rations",
-                        principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DishIngredients_DishId",
-                table: "DishIngredients",
-                column: "DishId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DishIngredients_IngredientId",
@@ -159,14 +148,9 @@ namespace DietSystem.Migrations
                 column: "IngredientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MealDishes_MDishId",
+                name: "IX_MealDishes_DishId",
                 table: "MealDishes",
-                column: "MDishId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MealDishes_MealId",
-                table: "MealDishes",
-                column: "MealId");
+                column: "DishId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Meals_RationId",

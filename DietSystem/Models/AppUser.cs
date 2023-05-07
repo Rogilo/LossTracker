@@ -10,5 +10,6 @@ namespace DietSystem.Models
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? ProfileImageUrl { get; set; }
+        public List<Ration>? Rations { get; } = new();
     }
 }
