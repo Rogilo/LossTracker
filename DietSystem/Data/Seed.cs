@@ -1,5 +1,7 @@
-﻿using DietSystem.Data.Enum;
+﻿using System.Net;
+using DietSystem.Data.Enum;
 using DietSystem.Models;
+using Microsoft.AspNetCore.Identity;
 using RunDietSystem.Data.Enum;
 
 namespace DietSystem.Data
@@ -273,6 +275,58 @@ namespace DietSystem.Data
                             }
                         });
                 context.SaveChanges();
+            }
+
+        }
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+
+                //Roles
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                if (!await roleManager.RoleExistsAsync(UserRoles.User))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+                //Users
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                string adminUserEmail = "admin@dietSystem.com";
+
+                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
+                if (adminUser == null)
+                {
+                    var newAdminUser = new AppUser()
+                    {
+                        FullName = "Admin User",
+                        UserName = "admin-user",
+                        ProfileImageUrl = "https://res.cloudinary.com/dxuyqa9jr/image/upload/v1682499170/cld-sample.jpg",
+                        Email = adminUserEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
+                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
+                }
+
+
+                string appUserEmail = "user@dietSystem.com";
+
+                var appUser = await userManager.FindByEmailAsync(appUserEmail);
+                if (appUser == null)
+                {
+                    var newAppUser = new AppUser()
+                    {
+                        FullName = "Application User",
+                        UserName = "app-user",
+                        ProfileImageUrl = "https://res.cloudinary.com/dxuyqa9jr/image/upload/v1682499152/samples/people/smiling-man.jpg",
+                        Email = appUserEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(newAppUser, "Coding@1234?");
+                    await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
+                }
             }
         }
     }

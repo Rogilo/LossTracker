@@ -1,15 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 
 namespace DietSystem.Models
 {
-    public class AppUser
+    public class AppUser : IdentityUser
     {
-        [Key]
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? ProfileImageUrl { get; set; }
-        public List<Ration>? Rations { get; } = new();
+        public string FullName { get; set; }
+        public string ProfileImageUrl { get; set; }
+        public List<Ration> Rations { get; set; }
     }
 }

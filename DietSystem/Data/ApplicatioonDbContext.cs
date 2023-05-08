@@ -1,11 +1,12 @@
-﻿using DietSystem.Models;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using DietSystem.Models;
 
 namespace DietSystem.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
-         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }
@@ -18,6 +19,7 @@ namespace DietSystem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+/*            base.OnModelCreating(modelBuilder);*/
             modelBuilder.Entity<DishIngredient>()
                     .HasKey(pc => new { pc.DishId, pc.IngredientId });
             modelBuilder.Entity<DishIngredient>()
@@ -41,16 +43,7 @@ namespace DietSystem.Data
                     .WithMany(pc => pc.MealDishes)
                     .HasForeignKey(c => c.DishId);
 
-
-            /* modelBuilder.Entity<DishIngredient>()
-                 .HasOne(e => e.Ingredient)
-                 .WithMany(e => e.DishIngredients)
-                 .HasForeignKey(e => e.IngredientId);
-
-             modelBuilder.Entity<DishIngredient>()
-                .HasOne(e => e.Dish)
-                .WithMany(e => e.DishIngredients)
-                .HasForeignKey(e => e.DishId);*/
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

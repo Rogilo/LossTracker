@@ -7,10 +7,13 @@ namespace DietSystem.Models
     {
         [Key]
         public int Id { get; set; }
+        public string RationName { get; set; }
+
+        // Relationships
         [ForeignKey("AppUser")]
-        public int? AppUserId { get; set; }
-        public AppUser? AppUser { get; set; }
-        public string? RationName { get; set; }
-        public List<Meal>? Meals { get; set; }
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
+
+        public List<Meal> Meals { get; set; }
     }
 }
