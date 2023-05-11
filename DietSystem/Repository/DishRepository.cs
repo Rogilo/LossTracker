@@ -3,6 +3,7 @@ using DietSystem.Data;
 using DietSystem.Models;
 using DietSystem.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using RunDietSystem.Data.Enum;
 using RunDietSystem.Interfaces;
 using RunDietSystem.ViewModels;
 
@@ -65,6 +66,21 @@ namespace RunDietSystem.Repository
                 .FirstOrDefaultAsync(n => n.Id == id);
             return dishDetail;
         }
+        public async Task<IEnumerable<Dish>> GetByNameAsync(string searchString)
+        {
+            var dishes = from m in _context.Dishes
+                         select m;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                dishes = dishes.Where(s => s.Name!.Contains(searchString));
+            }
+/*            if (Enum.IsDefined(dishCategory))
+            {
+                dishes = dishes.Where(x => x.DishCategory.HasFlag(dishCategory));
+            }*/
+            return await dishes.ToListAsync();
+        }
+
         public async Task<NewDishDropdownsVM> GetNewDishDropdownsValues()
         {
             var response = new NewDishDropdownsVM()

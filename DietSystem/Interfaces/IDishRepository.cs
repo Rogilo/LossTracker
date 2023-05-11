@@ -1,5 +1,6 @@
 ﻿using DietSystem.Models;
 using DietSystem.ViewModels;
+using RunDietSystem.Data.Enum;
 using RunDietSystem.ViewModels;
 
 namespace RunDietSystem.Interfaces
@@ -9,6 +10,7 @@ namespace RunDietSystem.Interfaces
         Task<IEnumerable<Dish>> GetAll();
         Task<Dish> GetByIdAsync(int id);
         Task<NewDishDropdownsVM> GetNewDishDropdownsValues();
+        Task<IEnumerable<Dish>> GetByNameAsync(string searchString);
         Task Add(NewDishVM data);
         Task Update(NewDishVM dish);
         bool Delete(Dish dish);

@@ -1,6 +1,8 @@
 ﻿using DietSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using RunDietSystem.Data.Enum;
 using RunDietSystem.Interfaces;
 using RunDietSystem.ViewModels;
 
@@ -16,9 +18,9 @@ namespace RunDietSystem.Controllers
             _photoService = photoService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            IEnumerable<Dish> dishes = await _dishrepository.GetAll();
+            var dishes = await _dishrepository.GetByNameAsync(searchString);
             return View(dishes);
         }
 
@@ -85,12 +87,6 @@ namespace RunDietSystem.Controllers
                 ModelState.AddModelError("", "Failed to edit dish");
                 return View("Edit", dishVM);
             }
-/*            var photoResult = await _photoService.AddPhotoAsync(dishVM.Image);
-            if (photoResult.Error != null)
-            {
-                ModelState.AddModelError("Image", "Photo upload failed");
-                return View(dishVM);
-            }*/
             if (!ModelState.IsValid)
             {
                 var dishDropdownsData = await _dishrepository.GetNewDishDropdownsValues();

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Dish> 
+﻿@using RunDietSystem.Data.Enum;
+@model IEnumerable<Dish> 
 
 @{
     ViewData["Title"] = "List of dishes";
@@ -7,10 +8,15 @@
 <section class="jumbotron text-center">
     <div class="container">
         <h1 class="jumbotron-heading">Assortment of dishes</h1>
-        <p class="lead text-muted">In this section there are dishes that you can add to your diet</p>
     </div>
 </section>
 
+<form asp-controller="Dish" asp-action="Index">
+    <p>
+        Name: <input type="text" name="searchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 <div class="row">
     @foreach(var item in Model)
     {
@@ -21,8 +27,12 @@
                         <div class="card-header text-white bg-info">
                             <p class="card-text">
                                 <h5 class="card-title">
-                                    @item.Name                      
-                                    <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                    @item.Name
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                    {
+                                        <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                        <a class="text-white float-right" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i></a>
+                                    }
                                 </h5>
                             </p>
                         </div>
