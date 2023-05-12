@@ -18,9 +18,9 @@ namespace RunDietSystem.Controllers
             _photoService = photoService;
         }
 
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, DishCategory dishCategory)
         {
-            var dishes = await _dishrepository.GetByNameAsync(searchString);
+            var dishes = await _dishrepository.FilterDishAsync(searchString, dishCategory);
             return View(dishes);
         }
 
@@ -100,6 +100,31 @@ namespace RunDietSystem.Controllers
 
             return RedirectToAction("Index");
 
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var dishDetails = await _dishrepository.GetByIdAsync(id);
+            if (dishDetails == null) return View("Error");
+            return View(dishDetails);
+        }
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var dishDetails = await _dishrepository.GetByIdAsync(id);
+
+            if (dishDetails == null)
+            {
+                return View("Error");
+            }
+
+            if (!string.IsNullOrEmpty(dishDetails.Image))
+            {
+                _ = _photoService.DeletePhotoAsync(dishDetails.Image);
+            }
+
+            _dishrepository.Delete(dishDetails);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -10,7 +10,7 @@ namespace RunDietSystem.Interfaces
         Task<IEnumerable<Dish>> GetAll();
         Task<Dish> GetByIdAsync(int id);
         Task<NewDishDropdownsVM> GetNewDishDropdownsValues();
-        Task<IEnumerable<Dish>> GetByNameAsync(string searchString);
+        Task<IEnumerable<Dish>> FilterDishAsync(string searchString, DishCategory dishCategory);
         Task Add(NewDishVM data);
         Task Update(NewDishVM dish);
         bool Delete(Dish dish);

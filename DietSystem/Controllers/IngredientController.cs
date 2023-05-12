@@ -1,4 +1,5 @@
-﻿using DietSystem.Interfaces;
+﻿using System.Net;
+using DietSystem.Interfaces;
 using DietSystem.Models;
 using DietSystem.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,29 @@ namespace DietSystem.Controllers
                 IngredientCategory = ingredientVM.IngredientCategory
             };
             _ingredientRepository.Update(ingredient);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var dishDetails = await _ingredientRepository.GetByIdAsync(id);
+            if (dishDetails == null) return View("Error");
+            return View(dishDetails);
+        }
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var ingredientDetails = await _ingredientRepository.GetByIdAsync(id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (ingredientDetails == null)
+            {
+                return View("Error");
+            }
+            _ingredientRepository.Delete(ingredientDetails);
             return RedirectToAction("Index");
         }
     }

@@ -2,10 +2,11 @@
 {
     public enum DishCategory
     {
+        Any,
         Soup,
         Dumpling,
         Pancake,
         Pie,
-        Pastry,
+        Pastry
     }
 }

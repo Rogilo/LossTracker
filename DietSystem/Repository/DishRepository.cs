@@ -66,18 +66,18 @@ namespace RunDietSystem.Repository
                 .FirstOrDefaultAsync(n => n.Id == id);
             return dishDetail;
         }
-        public async Task<IEnumerable<Dish>> GetByNameAsync(string searchString)
+        public async Task<IEnumerable<Dish>> FilterDishAsync(string searchString, DishCategory dishCategory)
         {
             var dishes = from m in _context.Dishes
                          select m;
-            if (!String.IsNullOrEmpty(searchString))
+            if (searchString != null && searchString != "")
             {
                 dishes = dishes.Where(s => s.Name!.Contains(searchString));
             }
-/*            if (Enum.IsDefined(dishCategory))
+            if (dishCategory.ToString() != null && (dishCategory.ToString() != "" && dishCategory.ToString() != "Any"))
             {
-                dishes = dishes.Where(x => x.DishCategory.HasFlag(dishCategory));
-            }*/
+                dishes = dishes.Where(x => x.DishCategory == dishCategory);
+            }
             return await dishes.ToListAsync();
         }
 

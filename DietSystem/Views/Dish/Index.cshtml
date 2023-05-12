@@ -13,8 +13,10 @@
 
 <form asp-controller="Dish" asp-action="Index">
     <p>
+        <select asp-items="@Html.GetEnumSelectList<DishCategory>()" name="dishCategory">
+        </select>
         Name: <input type="text" name="searchString" />
-        <input type="submit" value="Filter" />
+        <input type="submit" value="Filter" name="Filter"/>
     </p>
 </form>
 <div class="row">
