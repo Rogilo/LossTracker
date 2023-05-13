@@ -2,9 +2,8 @@
 @model Dish
 
 @{
-    ViewData["Title"] = "Dish Detail";
+    ViewData["Title"] = "Деталі страви";
 }
-<h1>Are you sure you want to delete this club?</h1>
 <div class="container">
 
     <h1 class="my-4">
@@ -12,13 +11,12 @@
     </h1>
 
     <div class="row">
-
         <div class="col-md-8">
             <img class="img-fluid" src="@Model.Image" alt="">
         </div>
 
         <div class="col-md-4">
-            <h3 class="my-3">Ingredients:</h3>
+            <h3 class="my-3">Інгрідієнти страви:</h3>
             <p>
                 @foreach (var item in Model.DishIngredients)
                 {
@@ -27,19 +25,17 @@
                     {
                         @(", ")
                     }
-
                 }
             </p>
-            <h3 class="my-3">Method of cooking:</h3>
+            <h3 class="my-3">Спосіб приготування:</h3>
             <p>@Model.MethodOfCooking</p>
-            <h3 class="my-3">Nutrient value in 100 g of the product:</h3>
+            <h3 class="my-3">Поживна (харчова) цінність в 100г продукту:</h3>
             <ul>
-                <li>Proteins: @Model.Proteins g;</li>
-                <li>Fats: @Model.Fats g;</li>
-                <li>Carbohydrates: @Model.Carbohydrates g;</li>
-                <li>Energy value of the product: @Model.Calories kcal;</li>
+                <li>Білки: @Model.Proteins g;</li>
+                <li>Жири: @Model.Fats g;</li>
+                <li>Вуглеводи: @Model.Carbohydrates g;</li>
+                <li>Енергетична цінність (калорійність) продукту: @Model.Calories kcal;</li>
             </ul>
         </div>
     </div>
 </div>
-

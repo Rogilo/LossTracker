@@ -1,7 +1,6 @@
 ﻿using DietSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using RunDietSystem.Data.Enum;
 using RunDietSystem.Interfaces;
 using RunDietSystem.ViewModels;
@@ -84,7 +83,7 @@ namespace RunDietSystem.Controllers
             if (id != dishVM.Id) return View("NotFound");
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Failed to edit dish");
+                ModelState.AddModelError("", "Не вдалось змінити страву");
                 return View("Edit", dishVM);
             }
             if (!ModelState.IsValid)

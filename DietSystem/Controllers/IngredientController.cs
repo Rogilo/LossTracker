@@ -52,7 +52,7 @@ namespace DietSystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Faild to edit ingredient");
+                ModelState.AddModelError("", "Не вдалось змінити інгрідієнт");
                 return View("Edit", ingredientVM);
             }
             var ingredient = new Ingredient

@@ -2,11 +2,11 @@
 {
     public enum DishCategory
     {
-        Any,
-        Soup,
-        Dumpling,
-        Pancake,
-        Pie,
-        Pastry
+        Всі,
+        Суп,
+        Вареники,
+        Млинці,
+        Пироги,
+        Випічка
     }
 }

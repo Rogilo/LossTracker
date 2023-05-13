@@ -37,8 +37,8 @@ var app = builder.Build();
 
 if(args.Length == 1 && args[0].ToLower() == "seeddata")
 {
-    Seed.SeedData(app);
-/*    Seed.SeedUsersAndRolesAsync(app).Wait();*/
+/*    Seed.SeedData(app);*/
+    Seed.SeedUsersAndRolesAsync(app).Wait();
 }
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

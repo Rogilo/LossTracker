@@ -4,8 +4,8 @@ namespace DietSystem.ViewModels
 {
     public class LoginVM
     {
-        [Display(Name = "Email Address")]
-        [Required(ErrorMessage ="Email address is required")]
+        [Display(Name = "Email адреса")]
+        [Required(ErrorMessage ="Введіть email адресу")]
         public string EmailAddress { get; set; }
         [Required]
         [DataType(DataType.Password)]

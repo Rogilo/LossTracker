@@ -74,7 +74,7 @@ namespace RunDietSystem.Repository
             {
                 dishes = dishes.Where(s => s.Name!.Contains(searchString));
             }
-            if (dishCategory.ToString() != null && (dishCategory.ToString() != "" && dishCategory.ToString() != "Any"))
+            if (dishCategory.ToString() != null && (dishCategory.ToString() != "" && dishCategory.ToString() != "Всі"))
             {
                 dishes = dishes.Where(x => x.DishCategory == dishCategory);
             }
@@ -101,7 +101,8 @@ namespace RunDietSystem.Repository
                 dbDish.MethodOfCooking = data.MethodOfCooking;
                 dbDish.DishCategory = data.DishCategory;
                 dbDish.Image = photoResult.Url.ToString();
-                dbDish.Calories = data.Calories;
+                double calories = data.Calories;
+                dbDish.Calories = calories;
                 dbDish.Proteins = data.Proteins;
                 dbDish.Fats = data.Fats;
                 dbDish.Carbohydrates = data.Carbohydrates;

@@ -2,12 +2,12 @@
 @model IEnumerable<Dish> 
 
 @{
-    ViewData["Title"] = "List of dishes";
+    ViewData["Title"] = "Список страв";
 }
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Assortment of dishes</h1>
+        <h1 class="jumbotron-heading">Список страв</h1>
     </div>
 </section>
 
@@ -15,8 +15,8 @@
     <p>
         <select asp-items="@Html.GetEnumSelectList<DishCategory>()" name="dishCategory">
         </select>
-        Name: <input type="text" name="searchString" />
-        <input type="submit" value="Filter" name="Filter"/>
+        Назва: <input type="text" name="searchString" />
+        <input type="submit" value="Пошук" name="Filter"/>
     </p>
 </form>
 <div class="row">
@@ -44,17 +44,17 @@
                     </div>
                     <div class="col-md-6">
                         <div class="card-body">
-                            <p class="card-text"><b>Calories: </b>@item.Calories
-                            <p class="card-text"><b>Proteins: </b>@item.Proteins
-                            <p class="card-text"><b>Fats: </b>@item.Fats
-                            <p class="card-text"><b>Carbohydrates: </b>@item.Carbohydrates
-                            <p class="card-text"><b>Category: </b>@item.DishCategory</p>                        
+                            <p class="card-text"><b>Калорійність: </b>@item.Calories
+                            <p class="card-text"><b>Білки: </b>@item.Proteins
+                            <p class="card-text"><b>Жири: </b>@item.Fats
+                            <p class="card-text"><b>Вуглеводи: </b>@item.Carbohydrates
+                            <p class="card-text"><b>Категорія: </b>@item.DishCategory</p>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="card-footer ">
                             <a class="btn btn-outline-primary" asp-action="Detail" asp-route-id="@item.Id">
-                                    <i class="bi bi-eye-fill"></i> Show Details
+                                    <i class="bi bi-eye-fill"></i> Детальніше
                                 </a>  
                         </div>
                     </div>
@@ -66,5 +66,6 @@
 
 <div style="position: fixed; right: 40px; bottom: 70px;" class="text-white">
     <a asp-controller="Dish" asp-action="Create" class="btn btn-success">
-    <i class="bi bi-plus-circle"></i>Add New</a>
+    <i class="bi bi-plus-circle"></i>Додати</a>
 </div>
+

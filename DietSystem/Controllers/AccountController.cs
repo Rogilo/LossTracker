@@ -45,11 +45,11 @@ namespace DietSystem.Controllers
                     }
                 }
                 // Password is incorrect 
-                TempData["Error"] = "Wrong credentials. Please, try again";
+                TempData["Error"] = "Дані неправильні. Спробуйте ще раз";
                 return View(loginVM);     
             }
             // User not found
-            TempData["Error"] = "Wrong credentials. Please, try again";
+            TempData["Error"] = "Дані неправильні. Спробуйте ще раз";
             return View(loginVM);
         }
 
@@ -69,7 +69,7 @@ namespace DietSystem.Controllers
             var user = await _userMaganer.FindByEmailAsync(registerVM.EmailAddress);
             if (user != null)
             {
-                TempData["Error"] = "This email is already in use";
+                TempData["Error"] = "Ця пошта вже використовується";
                 return View(registerVM);
             }
             var newUser = new AppUser()

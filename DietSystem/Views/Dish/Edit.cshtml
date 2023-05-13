@@ -4,13 +4,13 @@
 @model NewDishVM
 
 @{
-    ViewData["Title"] = "Update dish";
+    ViewData["Title"] = "Змінити страву";
 }
 
 <div class="row">
     <div class="col-md-8 offset-2">
         <p>
-            <h4>Update dish</h4>
+            <h4>Змінити страву</h4>
         </p>
 
         <div class="row">
@@ -20,57 +20,57 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label asp-for="Name" class="control-label"></label>
-                                <input asp-for="Name" class="form-control" />
+                                <label asp-for="Name" class="control-label">Назва страви</label>
+                                <input asp-for="Name" class="form-control" placeholder="Введіть назву страви"/>
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="MethodOfCooking">Method of cooking</label>
-                                <input asp-for="MethodOfCooking" class="form-control" placeholder="Method of cooking">
+                                <label asp-for="MethodOfCooking">Спосіб приготування</label>
+                                <input asp-for="MethodOfCooking" class="form-control" placeholder="Введіть спосіб приготування страви">
                                 <span asp-validation-for="MethodOfCooking" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="DishCategory">Club Category</label>
+                                <label asp-for="DishCategory">Категорія страви</label>
                                 <select asp-for="DishCategory" asp-items="@Html.GetEnumSelectList<DishCategory>()" class="form-control">
-                                    <option selected="selected" value="">--Select--</option>
+                                    <option selected="selected" value="">--Вибір--</option>
                                 </select>
                                 <span asp-validation-for="DishCategory" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Calories">Calories</label>
-                                <input asp-for="Calories" class="form-control" placeholder="Calories">
+                                <label asp-for="Calories">Калорійність</label>
+                                <input asp-for="Calories" class="form-control" placeholder="Калорій в грамах">
                                 <span asp-validation-for="Calories" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Proteins">Proteins</label>
-                                <input asp-for="Proteins" class="form-control" placeholder="Proteins">
+                                <label asp-for="Proteins">Білки</label>
+                                <input asp-for="Proteins" class="form-control" placeholder="Білків в грамах">
                                 <span asp-validation-for="Proteins" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Fats">Fats</label>
-                                <input asp-for="Fats" class="form-control" placeholder="Fats">
+                                <label asp-for="Fats">Жири</label>
+                                <input asp-for="Fats" class="form-control" placeholder="Жирів в грамах">
                                 <span asp-validation-for="Fats" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Carbohydrates">Carbohydrates</label>
-                                <input asp-for="Carbohydrates" class="form-control" placeholder="Carbohydrates">
+                                <label asp-for="Carbohydrates">Вуглеводи</label>
+                                <input asp-for="Carbohydrates" class="form-control" placeholder="Вуглеводів в грамах">
                                 <span asp-validation-for="Carbohydrates" class="text-danger"></span>
                             </div>                         
                             <div class="form-group">
-                                <label asp-for="IngredientIds" class="control-label"></label>
+                                <label asp-for="IngredientIds" class="control-label">Інгрідієнти страви</label>
                                 <select asp-for="IngredientIds" class="form-control" asp-items="ViewBag.Ingredients" multiple></select>
                                 <span asp-validation-for="IngredientIds" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Image">Image</label>
+                                <label asp-for="Image">Фото</label>
                                 <input asp-for="Image" type="file" class="form-control" placeholder="Image">
                                 <span asp-validation-for="Image" class="text-danger"></span>
                             </div>
                         </div>                                                                                           
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Update" class="btn btn-outline-success float-right" />
-                        <a class="btn btn-outline-secondary" asp-action="Index">Show all</a>
+                        <input type="submit" value="Змінити" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Назад</a>
                     </div>
 
                 </form>
@@ -80,50 +80,3 @@
 
     </div>
 </div>
-
-
-@*<form method="post" asp-action="Edit" enctype="multipart/form-data">
-    <div class="form-group">
-        <label asp-for="Name">Name</label>
-        <input asp-for="Name" class="form-control" placeholder="Name">
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="MethodOfCooking">Method of cooking</label>
-        <input asp-for="MethodOfCooking" class="form-control" placeholder="Method of cooking">
-        <span asp-validation-for="MethodOfCooking" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="DishCategory">Club Category</label>
-        <select asp-for="DishCategory" asp-items="@Html.GetEnumSelectList<DishCategory>()" class="form-control">
-            <option selected="selected" value="">--Select--</option>
-        </select>
-        <span asp-validation-for="DishCategory" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Calories">Calories</label>
-        <input asp-for="Calories" class="form-control" placeholder="Calories">
-        <span asp-validation-for="Calories" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Proteins">Proteins</label>
-        <input asp-for="Proteins" class="form-control" placeholder="Proteins">
-        <span asp-validation-for="Proteins" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Fats">Fats</label>
-        <input asp-for="Fats" class="form-control" placeholder="Fats">
-        <span asp-validation-for="Fats" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Carbohydrates">Carbohydrates</label>
-        <input asp-for="Carbohydrates" class="form-control" placeholder="Carbohydrates">
-        <span asp-validation-for="Carbohydrates" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Image">Image</label>
-        <input asp-for="Image" type="file" class="form-control" placeholder="Image">
-        <span asp-validation-for="Image" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>*@
