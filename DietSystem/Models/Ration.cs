@@ -13,7 +13,6 @@ namespace DietSystem.Models
         [ForeignKey("AppUser")]
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
-
         public List<Meal> Meals { get; set; }
     }
 }

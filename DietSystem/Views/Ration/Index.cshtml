@@ -1,7 +1,47 @@
-﻿@{
-    ViewData["Title"] = "Ration";
-}
+﻿@using DietSystem.ViewModels;
+@model Ration
 
-<div class="text-center">
-    <h1 class="display-4">Not Ration!</h1>
-</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+        <section class="breakfast" id="meal-plan">
+            @foreach (var meal in @Model.Meals)
+            {
+                <div class="container">
+                    <h3 class="breakfast-title">@meal.MealCategory</h3>
+                    @foreach (var dishes in meal.MealDishes)
+                    {
+                        <form action="" class="food">
+                            <div>
+                                <label>Назва: @dishes.Dish.Name</label>
+                                <span id="name"></span>
+                            </div>
+                            <div class="calories">
+                                <div>
+                                    <label>Ккал: @dishes.Dish.Calories</label>
+                                    <span id="kcal"></span>
+                                </div>
+                                <div>
+                                    <label>Білки: @dishes.Dish.Proteins</label>
+                                    <span id="bel"></span>
+                                </div>
+                                <div>
+                                    <label>Жири: @dishes.Dish.Fats</label>
+                                    <span id="fat"></span>
+                                </div>
+                                <div>
+                                    <label>Вуглеводи: @dishes.Dish.Carbohydrates</label>
+                                    <span id="ugl"></span>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                </div>
+            }
+        </section>
+</body>

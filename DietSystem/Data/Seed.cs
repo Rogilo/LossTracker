@@ -73,7 +73,7 @@ namespace DietSystem.Data
                     });
             }
                 context.SaveChanges();
-                if (!context.Ingredients.Any())
+            if (!context.Ingredients.Any())
                 {
                     context.Ingredients.AddRange(new List<Ingredient>()
                     {
@@ -470,7 +470,49 @@ namespace DietSystem.Data
                         });
                 context.SaveChanges();
             }
-
+            if (!context.Rations.Any())
+            {
+                context.Rations.AddRange(new List<Ration>()
+                {
+                    new Ration()
+                    {
+                        RationName = "User1Ration",
+                        AppUserId = "53514e0b-ddf0-487a-be5a-af68734ef7cd",
+                    }
+                });
+            }
+            if (!context.Meals.Any())
+            {
+                context.Meals.AddRange(new List<Meal>()
+                {
+                    new Meal()
+                    {
+                        RationId = 1,
+                        MealCategory = MealCategory.Breakfast
+                    }
+                });
+            }
+            if (!context.MealDishes.Any())
+            {
+                context.MealDishes.AddRange(new List<MealDish>()
+                {
+                    new MealDish()
+                    {
+                        MealId = 1,
+                        DishId = 1,
+                    },
+                    new MealDish()
+                    {
+                        MealId = 1,
+                        DishId = 2,
+                    },
+                    new MealDish()
+                    {
+                        MealId = 1,
+                        DishId = 3,
+                    }
+                });
+            }
         }
         public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
         {

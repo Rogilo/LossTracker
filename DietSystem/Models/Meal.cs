@@ -8,10 +8,13 @@ namespace DietSystem.Models
     {
         [Key]
         public int Id { get; set; }
+
+        public MealCategory MealCategory { get; set; }
+
+        // Relationships
         [ForeignKey("Ration")]
         public int RationId { get; set; }
         public Ration? Ration { get; set; }
-        public MealCategory MealCategory { get; set; }
         public List<MealDish> MealDishes { get; set; }
     }
 }

@@ -1,0 +1,85 @@
+﻿<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Document</title>
+</head>
+
+@{
+    ViewData["Title"] = "Створення раціону";
+}
+
+<body>
+    <div class="meal-counter">
+        <div>Кількість прийомів їжі</div> 
+        <select id="num-select" onchange="generateHTML()">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <!-- Продовжуй список якщо треба більше -->
+        </select>
+    </div>
+    <section class="breakfast" id="meal-plan">
+        <div class="container">
+            <h3 class="breakfast-title">Прийом їжі №</h3>
+            <form action="" class="food" id=0>
+                <input type="text" class="product-name"  id="product-name" name="product-name" placeholder="Product name">
+                <input type="text" class="weight" id="weight" name="weight" placeholder="Weight">
+                <div class="calories">
+                    <div>
+                        <label>Ккал:</label>
+                        <span id="kcal"></span>
+                    </div>
+                    <div>
+                        <label>Білки:</label>
+                        <span id="bel"></span>
+                    </div>
+                    <div>
+                        <label>Жири:</label>
+                        <span id="fat"></span>
+                    </div>
+                    <div>
+                        <label>Вуглеводи:</label>
+                        <span id="ugl"></span>
+                    </div>
+                </div>
+                <button type="button" id="close-btn" class="remove-food">&#10006;</button>
+            </form>
+            <button type="button" id="add-btn" class="add-food">Додати</button>
+        </div>
+    </section>
+</body>
+
+<script>
+    var foodCounter = 1; // Лічильник для генерації унікальних id страв
+
+    // Додавання страви
+    document.getElementById('meal-plan').addEventListener('click', function (event) {
+        if (event.target.classList.contains('add-food')) {
+            var meal = event.target.parentNode;
+            var foodContainer = meal.querySelector('.food');
+            var newFood = foodContainer.cloneNode(true);
+            var newId = foodCounter++; // генерація унікального id
+            newFood.id = newId;
+            foodContainer.parentNode.insertBefore(newFood, event.target);
+        }
+    }
+    // Видалення страви
+    document.getElementById('meal-plan').addEventListener('click', function (event) {
+        if (event.target.classList.contains('remove-food')) {
+            var food = event.target.parentNode;
+            food.parentNode.removeChild(food);
+        }
+    }
+    function generateHTML() {
+        var selectElement = document.getElementById('num-select');
+        var selectedNumber = parseInt(selectElement.value);
+        var htmlCode = '';
+        for (var i = 1; i <= selectedNumber; i++) 
+        {
+            htmlCode += '<div class="element">Element ' + i + '</div>';
+        }
+
+        document.getElementById('meal-plan').innerHTML = htmlCode;
+    }
+</script>

@@ -16,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IDishRepository, DishRepository>();
 builder.Services.AddScoped<IIngredientRepository,IngredientRepository>();
+builder.Services.AddScoped<IRationRepository, RationRepository>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
@@ -37,7 +38,7 @@ var app = builder.Build();
 
 if(args.Length == 1 && args[0].ToLower() == "seeddata")
 {
-/*    Seed.SeedData(app);*/
+    /*    Seed.SeedData(app);*/
     Seed.SeedUsersAndRolesAsync(app).Wait();
 }
 // Configure the HTTP request pipeline.
