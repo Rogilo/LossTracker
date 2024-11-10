@@ -1,0 +1,69 @@
+﻿@using LossTracker.Data.Enums
+@using LossTracker.ViewModel
+
+@model NewLossVM
+
+@{
+    ViewData["Title"] = "Додавання нової втрати";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Додайте новий запис про втрату</h4>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Name">Назва техніки</label>
+                                <input asp-for="Name" class="form-control" placeholder="Введіть назву техніки">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Date">Дата втрати</label>
+                                <input asp-for="Date" type="date" class="form-control">
+                                <span asp-validation-for="Date" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EquipmentTypeId">Тип техніки</label>
+                                <select asp-for="EquipmentTypeId" class="form-control" asp-items="ViewBag.EquipmentTypes">
+                                    <option value="">-- Виберіть тип техніки --</option>
+                                </select>
+                                <span asp-validation-for="EquipmentTypeId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LossStatusId">Статус втрати</label>
+                                <select asp-for="LossStatusId" class="form-control" asp-items="ViewBag.LossStatuses">
+                                    <option value="">-- Виберіть статус --</option>
+                                </select>
+                                <span asp-validation-for="LossStatusId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LocationId">Місцезнаходження</label>
+                                <select asp-for="LocationId" class="form-control" asp-items="ViewBag.Locations">
+                                    <option value="">-- Виберіть місцезнаходження --</option>
+                                </select>
+                                <span asp-validation-for="LocationId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TagIds">Теги втрати</label>
+                                <select asp-for="TagIds" class="form-control" asp-items="ViewBag.Tags" multiple>
+                                </select>
+                                <span asp-validation-for="TagIds" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Додати" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Назад</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

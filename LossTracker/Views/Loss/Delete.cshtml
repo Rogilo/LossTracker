@@ -1,0 +1,24 @@
+﻿@using LossTracker.ViewModel
+
+
+@{
+    ViewData["Title"] = "Видалити запис про втрату";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Підтвердження видалення запису про втрату: @Model.Name</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <div class="form-group">
+                    <form asp-action="Delete">
+                        <input type="submit" value="Підтвердити" class="btn btn-danger float-right" />
+                    </form>
+                    <a class="btn btn-outline-secondary" asp-action="Index">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

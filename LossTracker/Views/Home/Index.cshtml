@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LossTracker.Models.Loss>
+
+@{
+    ViewData["Title"] = "LossTracker";
+}
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Головна сторінка LossTracker</h1>
+        <p class="lead text-muted">Огляд останніх втрат техніки у конфліктах</p>
+    </div>
+</section>
+
+<!-- Відображення останніх втрат -->
+<div class="container">
+    <h2 class="my-4">Останні додані</h2>
+    <div class="row">
+        @foreach (var loss in Model)
+        {
+            <div class="col-md-4 col-xs-6 mb-3">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-12">
+                            <div class="card-header text-white bg-info">
+                                <h5 class="card-title">
+                                    @loss.EquipmentType.Name
+                                    <small class="text-muted float-right">@loss.Date.ToShortDateString()</small>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <img src="@loss.Photos.FirstOrDefault()?.Url" alt="@loss.EquipmentType.Name" class="img-fluid">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <p class="card-text"><b>Місце: </b>@loss.Location.Name</p>
+                                <p class="card-text"><b>Дата: </b>@loss.Date.Date</p>
+                                <p class="card-text">
+                                    <b>Теги: </b>
+                                    @foreach (var tag in loss.Tags)
+                                    {
+                                        <span class="badge badge-secondary">@tag.TagName</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-footer">
+                                <a class="btn btn-outline-primary" asp-action="Details" asp-controller="Loss" asp-route-id="@loss.LossId">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a class="btn btn-primary" asp-action="Index" asp-controller="Loss">Переглянути всі втрати</a>
+</div>

@@ -1,0 +1,61 @@
+﻿@model LossTracker.Models.Loss
+
+@{
+    ViewData["Title"] = "Деталі втрати техніки";
+}
+
+<div class="container">
+    <h1 class="my-4">
+        @Model.Name
+    </h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            @if (Model.Photos != null && Model.Photos.Any())
+            {
+                <img class="img-fluid" src="@Model.Photos.First().Url" alt="Фото втрати">
+            }
+            else
+            {
+                <p>Фото відсутнє</p>
+            }
+        </div>
+
+        <div class="col-md-4">
+            <h3 class="my-3">Деталі втрати:</h3>
+            <ul>
+                <li><b>Тип техніки:</b> @Model.EquipmentType.Name</li>
+                <li><b>Статус втрати:</b> @Model.LossStatus.Name</li>
+                <li><b>Місце втрати:</b> @Model.Location.Name</li>
+                <li><b>Дата втрати:</b> @Model.Date.ToShortDateString()</li>
+            </ul>
+
+            <h3 class="my-3">Теги:</h3>
+            <p>
+                @foreach (var tag in Model.Tags)
+                {
+                    @tag.TagName
+                    @if (tag != Model.Tags.Last())
+                    {
+                        @(", ")
+                    }
+                }
+            </p>
+
+            <h3 class="my-3">Додаткові фото:</h3>
+            @if (Model.Photos.Count > 1)
+            {
+                <div>
+                    @foreach (var photo in Model.Photos.Skip(1))
+                    {
+                        <img src="@photo.Url" alt="Додаткове фото" class="img-thumbnail" style="width:100px; height:auto; margin-right:5px;">
+                    }
+                </div>
+            }
+            else
+            {
+                <p>Додаткові фото відсутні</p>
+            }
+        </div>
+    </div>
+</div>

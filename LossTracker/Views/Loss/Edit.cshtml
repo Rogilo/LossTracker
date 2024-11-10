@@ -1,0 +1,71 @@
+﻿@using LossTracker.ViewModel
+@model NewLossVM
+
+@{
+    ViewData["Title"] = "Змінити запис про втрату";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Змінити запис про втрату</h4>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label">Назва техніки</label>
+                                <input asp-for="Name" class="form-control" placeholder="Введіть назву техніки" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Date" class="control-label">Дата втрати</label>
+                                <input asp-for="Date" type="date" class="form-control">
+                                <span asp-validation-for="Date" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EquipmentTypeId" class="control-label">Тип техніки</label>
+                                <select asp-for="EquipmentTypeId" asp-items="ViewBag.EquipmentTypes" class="form-control">
+                                    <option selected="selected" value="">--Виберіть тип техніки--</option>
+                                </select>
+                                <span asp-validation-for="EquipmentTypeId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LossStatusId" class="control-label">Статус втрати</label>
+                                <select asp-for="LossStatusId" asp-items="ViewBag.LossStatuses" class="form-control">
+                                    <option selected="selected" value="">--Виберіть статус--</option>
+                                </select>
+                                <span asp-validation-for="LossStatusId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LocationId" class="control-label">Місцезнаходження</label>
+                                <select asp-for="LocationId" asp-items="ViewBag.Locations" class="form-control">
+                                    <option selected="selected" value="">--Виберіть місцезнаходження--</option>
+                                </select>
+                                <span asp-validation-for="LocationId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TagIds" class="control-label">Теги втрати</label>
+                                <select asp-for="TagIds" asp-items="ViewBag.Tags" class="form-control" multiple>
+                                </select>
+                                <span asp-validation-for="TagIds" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Image">Фото</label>
+                                <input asp-for="Image" type="file" class="form-control" placeholder="Фото">
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Змінити" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Назад</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

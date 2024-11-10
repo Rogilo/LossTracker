@@ -1,0 +1,65 @@
+﻿@model IEnumerable<LossTracker.Models.Loss>
+
+@{
+    ViewData["Title"] = "Мапа втрат";
+}
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Інтерактивна мапа втрат</h1>
+    </div>
+</section>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <select name="EquipmentTypeId" class="form-control">
+            <option value="">-- Виберіть тип техніки --</option>
+            @foreach (var type in ViewBag.EquipmentTypes)
+            {
+                <option value="@type.Id">@type.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <select name="LossStatusId" class="form-control">
+            <option value="">-- Виберіть статус втрати --</option>
+            @foreach (var status in ViewBag.LossStatuses)
+            {
+                <option value="@status.Id">@status.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <select name="LocationId" class="form-control">
+            <option value="">-- Виберіть місце --</option>
+            @foreach (var location in ViewBag.Locations)
+            {
+                <option value="@location.Id">@location.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4 mt-2">
+        <button type="submit" class="btn btn-primary">Фільтрувати</button>
+    </div>
+</div>
+
+<!-- Мапа -->
+<div id="map" style="height: 500px;"></div>
+
+@section Scripts {
+    <script>
+        // Ініціалізація інтерактивної мапи (приклад з Leaflet.js)
+        var map = L.map('map').setView([48.3794, 31.1656], 6); // Координати центру України
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        @foreach (var loss in Model)
+    {
+        var marker = L.marker([@loss.Location.Coordinates]).addTo(map)
+    .bindPopup("<b>@loss.EquipmentType.Name</b><br>@loss.Location.Name<br><a href='/Loss/Details/@loss.LossId'>Детальніше</a>");
+        }
+</script>
+}
